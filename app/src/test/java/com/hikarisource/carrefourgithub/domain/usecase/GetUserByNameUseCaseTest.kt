@@ -13,7 +13,7 @@ import org.junit.Assert
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class GetUserByLoginUseCaseTest {
+class GetUserByNameUseCaseTest {
 
     @RelaxedMockK
     private lateinit var userRepository: UserRepository

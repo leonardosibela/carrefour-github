@@ -1,5 +1,6 @@
 package com.hikarisource.carrefourgithub.util
 
+import com.hikarisource.carrefourgithub.domain.model.Repository
 import com.hikarisource.carrefourgithub.domain.model.User
 
 
@@ -16,5 +17,18 @@ object TestData {
         login = "defunkt",
         avatarUrl = "https://avatars.githubusercontent.com/u/2?v=4",
         url = "https://api.github.com/users/defunkt"
+    )
+
+
+    val FIRST_REPO = Repository(
+        id = 1861402,
+        name = "ace",
+        url = "https://github.com/defunkt/ace"
+    )
+
+    val SECOND_REPO = Repository(
+        id = 3594,
+        name = "acts_as_textiled",
+        url = "https://github.com/defunkt/acts_as_textiled"
     )
 }
