@@ -48,6 +48,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.squareup.retrofit)
+    implementation(libs.squareup.converter.gson)
 
     testImplementation(libs.junit)
 
