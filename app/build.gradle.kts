@@ -51,8 +51,18 @@ dependencies {
     implementation(libs.squareup.retrofit)
     implementation(libs.squareup.converter.gson)
 
+    implementation(libs.io.insert.koin.android)
+
+
+    // TEST
     testImplementation(libs.junit)
 
+    testImplementation(libs.io.mockk)
+
+    testImplementation(libs.kotlinx.coroutines.test)
+
+
+    // ANDROID TEST
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
