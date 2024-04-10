@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.hikarisource.carrefourgithub.core.extensions.VerticalItemDecoration
 import com.hikarisource.carrefourgithub.core.extensions.launchWhenCreated
@@ -74,29 +75,18 @@ class UserListFragment : Fragment() {
         }
     }
 
-    private fun displayUserListLoading() {
-
+    private fun displayUserListLoading() = binding.run {
+        usersProgress.isVisible = true
+        userRecycler.isVisible = false
     }
 
     private fun displayEmptyListMessage() {
 
     }
 
-    private fun displayUsers(users: List<UserPresentation>) {
+    private fun displayUsers(users: List<UserPresentation>) = binding.run {
+        usersProgress.isVisible = false
+        userRecycler.isVisible = true
         userAdapter.submitList(users)
     }
 }
-
-val FIRST_USER = UserPresentation(
-    id = 1,
-    login = "mojombo",
-    avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4",
-    url = "https://api.github.com/users/mojombo"
-)
-
-val SECOND_USER = UserPresentation(
-    id = 2,
-    login = "defunkt",
-    avatarUrl = "https://avatars.githubusercontent.com/u/2?v=4",
-    url = "https://api.github.com/users/defunkt"
-)
