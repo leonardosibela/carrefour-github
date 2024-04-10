@@ -14,10 +14,6 @@ class UserRepositoryApi(private val githubApi: GithubApi) : UserRepository {
         return githubApi.fetchUsers().toDomainList()
     }
 
-    override suspend fun getUser(username: String): User {
-        return githubApi.getUser(username).toDomain()
-    }
-
     override suspend fun getUserRepos(username: String): List<Repository> {
         return githubApi.getUserRepos(username).toDomainList()
     }

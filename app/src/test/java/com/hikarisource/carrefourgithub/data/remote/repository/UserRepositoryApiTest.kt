@@ -52,22 +52,6 @@ class UserRepositoryApiTest {
         }
 
     @Test
-    fun `GIVEN userRepositoryApi WHEN getUser called THEN must return same value as GithubApi getUser mapped`() =
-        runTest {
-            // GIVEN
-            val userName = "leonardosibela"
-            coEvery { githubApi.getUser(userName) } returns FIRST_USER_RESPONSE
-            val expected = FIRST_USER
-
-            // WHEN
-            val actual = userRepositoryApi.getUser(userName)
-
-            // THEN
-            coVerify(exactly = 1) { githubApi.getUser(userName) }
-            Assert.assertEquals(expected, actual)
-        }
-
-    @Test
     fun `GIVEN userRepositoryApi WHEN getUserRepos called THEN must return same value as GithubApi getUserRepos mapped`() =
         runTest {
             // GIVEN

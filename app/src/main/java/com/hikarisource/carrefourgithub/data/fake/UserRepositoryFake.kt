@@ -44,10 +44,6 @@ object UserRepositoryFake : UserRepository {
         return users
     }
 
-    override suspend fun getUser(username: String): User {
-        return users.first { it.login == username }
-    }
-
     override suspend fun getUserRepos(username: String): List<Repository> {
         return repos
     }

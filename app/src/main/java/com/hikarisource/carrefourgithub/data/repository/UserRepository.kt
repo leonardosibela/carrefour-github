@@ -7,7 +7,5 @@ interface UserRepository {
 
     suspend fun getAll(): List<User>
 
-    suspend fun getUser(username: String): User
-
     suspend fun getUserRepos(username: String): List<Repository>
 }
