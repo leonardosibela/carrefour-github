@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Carrefour Github</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name" translatable="false">Carrefour Github</string>
+    <string name="repository_empty_message">This user does not\nhave any repository</string>
 </resources>

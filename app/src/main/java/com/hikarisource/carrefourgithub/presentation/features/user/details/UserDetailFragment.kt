@@ -92,17 +92,21 @@ class UserDetailFragment : Fragment() {
     }
 
     private fun displayLoading() = binding.run {
-        repositoriesProgress.isVisible = true
         repositoryRecycler.isVisible = false
+        repositoriesProgress.isVisible = true
+        userRepositoryEmptyListText.isVisible = false
     }
 
-    private fun displayEmptyListMessage() {
-
+    private fun displayEmptyListMessage() = binding.run {
+        repositoryRecycler.isVisible = false
+        repositoriesProgress.isVisible = false
+        userRepositoryEmptyListText.isVisible = true
     }
 
-    private fun displayRepositories(fetchUserState: Fetched) {
-        binding.repositoryRecycler.isVisible = true
-        binding.repositoriesProgress.isVisible = false
+    private fun displayRepositories(fetchUserState: Fetched) = binding.run {
+        repositoryRecycler.isVisible = true
+        repositoriesProgress.isVisible = false
+        userRepositoryEmptyListText.isVisible = false
         repositoryAdapter.submitList(fetchUserState.repositories)
     }
 }
