@@ -1,5 +1,6 @@
 package com.hikarisource.carrefourgithub.presentation.features.user.details
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hikarisource.carrefourgithub.domain.usecase.GetRepositoriesFromUserUseCase
@@ -14,7 +15,9 @@ class UserDetailViewModel(
     private val getRepositoriesFromUserUseCase: GetRepositoriesFromUserUseCase
 ) : ViewModel() {
 
-    private val _fetchRepositoriesState = MutableStateFlow<FetchRepositoriesState>(Fetching)
+    @Suppress("PropertyName")
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val _fetchRepositoriesState = MutableStateFlow<FetchRepositoriesState>(Fetching)
     val fetchRepositoriesState = _fetchRepositoriesState.asStateFlow()
 
     fun fetchRepositoriesFromUser(userPresentation: UserPresentation) = viewModelScope.launch {

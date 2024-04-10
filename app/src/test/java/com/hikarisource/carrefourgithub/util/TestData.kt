@@ -4,6 +4,7 @@ import com.hikarisource.carrefourgithub.data.remote.reponse.RepositoryResponse
 import com.hikarisource.carrefourgithub.data.remote.reponse.UserResponse
 import com.hikarisource.carrefourgithub.domain.model.Repository
 import com.hikarisource.carrefourgithub.domain.model.User
+import com.hikarisource.carrefourgithub.presentation.model.RepositoryPresentation
 import com.hikarisource.carrefourgithub.presentation.model.UserPresentation
 
 
@@ -70,6 +71,18 @@ object TestData {
     )
 
     val SECOND_REPO_RESPONSE = RepositoryResponse(
+        id = 3594,
+        name = "acts_as_textiled",
+        url = "https://github.com/defunkt/acts_as_textiled"
+    )
+
+    val FIRST_REPO_PRESENTATION = RepositoryPresentation(
+        id = 1861402,
+        name = "ace",
+        url = "https://github.com/defunkt/ace"
+    )
+
+    val SECOND_REPO_PRESENTATION = RepositoryPresentation(
         id = 3594,
         name = "acts_as_textiled",
         url = "https://github.com/defunkt/acts_as_textiled"
