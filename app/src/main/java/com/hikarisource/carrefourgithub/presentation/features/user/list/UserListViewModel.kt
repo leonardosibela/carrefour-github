@@ -18,15 +18,10 @@ class UserListViewModel(
 
     fun fetchAllUsers() = viewModelScope.launch {
         val users = getAllUsersUseCase().fromDomainList()
-        _fetchUsersState.value = if (users.isEmpty()) {
-            EmptyList
-        } else {
-            Fetched(users)
-        }
+        _fetchUsersState.value = Fetched(users)
     }
 }
 
 sealed interface FetchUserState
 data object Fetching : FetchUserState
-data object EmptyList : FetchUserState
 data class Fetched(val users: List<UserPresentation>) : FetchUserState

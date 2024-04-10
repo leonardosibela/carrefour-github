@@ -70,7 +70,6 @@ class UserListFragment : Fragment() {
     private fun onFetchUserStateChanged(fetchUserState: FetchUserState) {
         when (fetchUserState) {
             Fetching -> displayUserListLoading()
-            EmptyList -> displayEmptyListMessage()
             is Fetched -> displayUsers(fetchUserState.users)
         }
     }
@@ -78,10 +77,6 @@ class UserListFragment : Fragment() {
     private fun displayUserListLoading() = binding.run {
         usersProgress.isVisible = true
         userRecycler.isVisible = false
-    }
-
-    private fun displayEmptyListMessage() {
-
     }
 
     private fun displayUsers(users: List<UserPresentation>) = binding.run {
