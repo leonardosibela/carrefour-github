@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="repository_empty_message">Esse usuário não\npossui repositórios</string>
+    <string name="error_fetching_repositories">Houve uma falha ao\nbuscar os repositórios</string>
+    <string name="error_fetching_users">Houve uma falha ao\nbuscar os usuários</string>
+    <string name="try_again">Tente novamente</string>
 </resources>

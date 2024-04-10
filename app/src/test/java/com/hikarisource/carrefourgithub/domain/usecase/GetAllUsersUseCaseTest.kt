@@ -1,6 +1,7 @@
 package com.hikarisource.carrefourgithub.domain.usecase
 
 import com.hikarisource.carrefourgithub.data.repository.UserRepository
+import com.hikarisource.carrefourgithub.domain.common.Result
 import com.hikarisource.carrefourgithub.domain.model.User
 import com.hikarisource.carrefourgithub.util.TestData.FIRST_USER
 import com.hikarisource.carrefourgithub.util.TestData.SECOND_USER
@@ -13,6 +14,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Test
+import java.net.SocketTimeoutException
 
 @ExperimentalCoroutinesApi
 class GetAllUsersUseCaseTest {
@@ -28,7 +30,7 @@ class GetAllUsersUseCaseTest {
     }
 
     @Test
-    fun `GIVEN UserRepository getAll return list WHEN GetAllUsersUseCaseTest called THEN must return same values`() =
+    fun `GIVEN UserRepository getAll return list WHEN GetAllUsersUseCase called THEN must return same values`() =
         runTest {
             // GIVEN
             val users = listOf(FIRST_USER, SECOND_USER)
@@ -39,11 +41,27 @@ class GetAllUsersUseCaseTest {
 
             // THEN
             coVerify(exactly = 1) { userRepository.getAll() }
-            Assert.assertEquals(users, actual)
+            Assert.assertEquals(Result.Success(users), actual)
         }
 
     @Test
-    fun `GIVEN UserRepository getAll return empty list WHEN GetAllUsersUseCaseTest called THEN must return empty list`() =
+    fun `GIVEN UserRepository getAll throws exception WHEN GetAllUsersUseCase called THEN must return Error`() =
+        runTest {
+            // GIVEN
+            val timeoutException = SocketTimeoutException()
+            coEvery { userRepository.getAll() } throws timeoutException
+
+            // WHEN
+            val actual = getAllUsersUseCase()
+
+            // THEN
+            coVerify(exactly = 1) { userRepository.getAll() }
+            Assert.assertEquals(Result.Error<List<User>>(timeoutException), actual)
+        }
+
+
+    @Test
+    fun `GIVEN UserRepository getAll return empty list WHEN GetAllUsersUseCase called THEN must return empty list`() =
         runTest {
             // GIVEN
             val users = emptyList<User>()
@@ -54,6 +72,6 @@ class GetAllUsersUseCaseTest {
 
             // THEN
             coVerify(exactly = 1) { userRepository.getAll() }
-            Assert.assertEquals(users, actual)
+            Assert.assertEquals(Result.Success(users), actual)
         }
 }

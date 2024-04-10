@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Carrefour Github</string>
     <string name="repository_empty_message">This user does not\nhave any repository</string>
+    <string name="error_fetching_repositories">There was an error\nfetching repositories</string>
+    <string name="error_fetching_users">There was an error\nfetching users</string>
+    <string name="try_again">Try again</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.hikarisource.carrefourgithub.domain.usecase
 
 import com.hikarisource.carrefourgithub.data.repository.UserRepository
+import com.hikarisource.carrefourgithub.domain.common.Result
+import com.hikarisource.carrefourgithub.domain.model.Repository
 import com.hikarisource.carrefourgithub.util.TestData.FIRST_REPO
 import com.hikarisource.carrefourgithub.util.TestData.SECOND_REPO
 import com.hikarisource.carrefourgithub.util.initMockKAnnotations
@@ -12,6 +14,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Test
+import java.net.SocketTimeoutException
 
 @ExperimentalCoroutinesApi
 class GetRepositoriesFromUserUseCaseTest {
@@ -27,7 +30,7 @@ class GetRepositoriesFromUserUseCaseTest {
     }
 
     @Test
-    fun `GIVEN UserRepository getUser return user WHEN GetAllUsersUseCaseTest called THEN must return same value`() =
+    fun `GIVEN UserRepository getUser return user WHEN GetRepositoriesFromUserUseCase called THEN must return same value`() =
         runTest {
             // GIVEN
             val repositories = listOf(FIRST_REPO, SECOND_REPO)
@@ -39,6 +42,22 @@ class GetRepositoriesFromUserUseCaseTest {
 
             // THEN
             coVerify(exactly = 1) { userRepository.getUserRepos(username) }
-            Assert.assertEquals(repositories, actual)
+            Assert.assertEquals(Result.Success(repositories), actual)
+        }
+
+    @Test
+    fun `GIVEN UserRepository getUser throws exception WHEN GetRepositoriesFromUserUseCase called THEN must return Error`() =
+        runTest {
+            // GIVEN
+            val userName = "leonardosibela"
+            val timeoutException = SocketTimeoutException()
+            coEvery { userRepository.getUserRepos(userName) } throws timeoutException
+
+            // WHEN
+            val actual = getRepositoriesFromUserUseCase(userName)
+
+            // THEN
+            coVerify(exactly = 1) { userRepository.getUserRepos(userName) }
+            Assert.assertEquals(Result.Error<List<Repository>>(timeoutException), actual)
         }
 }

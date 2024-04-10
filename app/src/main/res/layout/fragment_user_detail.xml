@@ -61,6 +61,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/repositories_progress" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/user_repository_list_error_text"
+        style="@style/TextAppearance.Material3.HeadlineSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.7"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:text="@string/error_fetching_repositories"
+        app:layout_constraintBottom_toBottomOf="@+id/repositories_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/repositories_progress" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/repository_recycler"
         android:layout_width="0dp"

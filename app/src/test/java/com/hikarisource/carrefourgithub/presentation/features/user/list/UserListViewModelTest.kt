@@ -1,5 +1,6 @@
 package com.hikarisource.carrefourgithub.presentation.features.user.list
 
+import com.hikarisource.carrefourgithub.domain.common.Result
 import com.hikarisource.carrefourgithub.domain.usecase.GetAllUsersUseCase
 import com.hikarisource.carrefourgithub.util.CoroutineTestRule
 import com.hikarisource.carrefourgithub.util.TestData.FIRST_USER
@@ -39,11 +40,26 @@ class UserListViewModelTest {
     }
 
     @Test
-    fun `GIVEN userListViewModel WHEN fetchAllUsers called THEN must set fetchUsersState with expected value`() =
+    fun `GIVEN getAllUsersUseCase returns list WHEN fetchAllUsers called THEN must set fetchUsersState with expected value`() =
         runTest(unconfinedTestDispatcher) {
             // GIVEN
-            coEvery { getAllUsersUseCase() } returns listOf(FIRST_USER, SECOND_USER)
+            coEvery { getAllUsersUseCase() } returns Result.Success(listOf(FIRST_USER, SECOND_USER))
             val expected = Fetched(listOf(FIRST_USER_PRESENTATION, SECOND_USER_PRESENTATION))
+
+            // WHEN
+            userListViewModel.fetchAllUsers()
+
+            // THEN
+            Assert.assertEquals(expected, userListViewModel._fetchUsersState.value)
+        }
+
+    @Test
+    fun `GIVEN getAllUsersUseCase returns error WHEN fetchRepositoriesFromUser called THEN must set fetchRepositoriesState with error`() =
+        runTest(unconfinedTestDispatcher) {
+            // GIVEN
+            val throwable = Throwable("Message")
+            coEvery { getAllUsersUseCase() } returns Result.Error(throwable)
+            val expected = Error(throwable)
 
             // WHEN
             userListViewModel.fetchAllUsers()

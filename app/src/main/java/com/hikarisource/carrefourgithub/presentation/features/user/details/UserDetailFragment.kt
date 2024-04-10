@@ -88,6 +88,7 @@ class UserDetailFragment : Fragment() {
             Fetching -> displayLoading()
             EmptyList -> displayEmptyListMessage()
             is Fetched -> displayRepositories(fetchRepositoriesState)
+            is Error -> displayErrorMessage()
         }
     }
 
@@ -95,18 +96,28 @@ class UserDetailFragment : Fragment() {
         repositoryRecycler.isVisible = false
         repositoriesProgress.isVisible = true
         userRepositoryEmptyListText.isVisible = false
+        userRepositoryListErrorText.isVisible = false
     }
 
     private fun displayEmptyListMessage() = binding.run {
         repositoryRecycler.isVisible = false
         repositoriesProgress.isVisible = false
         userRepositoryEmptyListText.isVisible = true
+        userRepositoryListErrorText.isVisible = false
     }
 
     private fun displayRepositories(fetchUserState: Fetched) = binding.run {
         repositoryRecycler.isVisible = true
         repositoriesProgress.isVisible = false
         userRepositoryEmptyListText.isVisible = false
+        userRepositoryListErrorText.isVisible = false
         repositoryAdapter.submitList(fetchUserState.repositories)
+    }
+
+    private fun displayErrorMessage() = binding.run {
+        repositoryRecycler.isVisible = false
+        repositoriesProgress.isVisible = false
+        userRepositoryEmptyListText.isVisible = false
+        userRepositoryListErrorText.isVisible = true
     }
 }

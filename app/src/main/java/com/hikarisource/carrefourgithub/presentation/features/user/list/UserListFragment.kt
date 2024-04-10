@@ -48,7 +48,12 @@ class UserListFragment : Fragment() {
     }
 
     private fun setupViews() {
+        setupListeners()
         setupRecycler()
+    }
+
+    private fun setupListeners() = binding.run{
+        fetchUsersTryAgainButton.setOnClickListener {  }
     }
 
     private fun setupRecycler() = binding.run {
@@ -71,17 +76,29 @@ class UserListFragment : Fragment() {
         when (fetchUserState) {
             Fetching -> displayUserListLoading()
             is Fetched -> displayUsers(fetchUserState.users)
+            is Error -> displayUserListError()
         }
     }
 
     private fun displayUserListLoading() = binding.run {
+        fetchUsersTryAgainButton.isVisible = false
+        userListErrorText.isVisible = false
         usersProgress.isVisible = true
         userRecycler.isVisible = false
     }
 
     private fun displayUsers(users: List<UserPresentation>) = binding.run {
+        fetchUsersTryAgainButton.isVisible = false
+        userListErrorText.isVisible = false
         usersProgress.isVisible = false
         userRecycler.isVisible = true
         userAdapter.submitList(users)
+    }
+
+    private fun displayUserListError() = binding.run {
+        fetchUsersTryAgainButton.isVisible = true
+        userListErrorText.isVisible = true
+        usersProgress.isVisible = false
+        userRecycler.isVisible = false
     }
 }

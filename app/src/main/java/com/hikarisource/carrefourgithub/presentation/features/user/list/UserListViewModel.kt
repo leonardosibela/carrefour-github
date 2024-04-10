@@ -3,6 +3,7 @@ package com.hikarisource.carrefourgithub.presentation.features.user.list
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hikarisource.carrefourgithub.domain.common.Result
 import com.hikarisource.carrefourgithub.domain.usecase.GetAllUsersUseCase
 import com.hikarisource.carrefourgithub.presentation.mappers.UserMapper.fromDomainList
 import com.hikarisource.carrefourgithub.presentation.model.UserPresentation
@@ -20,11 +21,15 @@ class UserListViewModel(
     val fetchUsersState = _fetchUsersState.asStateFlow()
 
     fun fetchAllUsers() = viewModelScope.launch {
-        val users = getAllUsersUseCase().fromDomainList()
-        _fetchUsersState.value = Fetched(users)
+        val result = getAllUsersUseCase()
+        _fetchUsersState.value = when (result) {
+            is Result.Error -> Error(result.throwable)
+            is Result.Success -> Fetched(result.data.fromDomainList())
+        }
     }
 }
 
 sealed interface FetchUserState
 data object Fetching : FetchUserState
+data class Error(val throwable: Throwable) : FetchUserState
 data class Fetched(val users: List<UserPresentation>) : FetchUserState

@@ -1,5 +1,6 @@
 package com.hikarisource.carrefourgithub.presentation.features.user.details
 
+import com.hikarisource.carrefourgithub.domain.common.Result
 import com.hikarisource.carrefourgithub.domain.usecase.GetRepositoriesFromUserUseCase
 import com.hikarisource.carrefourgithub.util.CoroutineTestRule
 import com.hikarisource.carrefourgithub.util.TestData.FIRST_REPO
@@ -44,11 +45,26 @@ class UserDetailViewModelTest {
         runTest(unconfinedTestDispatcher) {
             // GIVEN
             val user = FIRST_USER_PRESENTATION
-            coEvery { getRepositoriesFromUserUseCase(user.login) } returns listOf(
-                FIRST_REPO,
-                SECOND_REPO
+            coEvery { getRepositoriesFromUserUseCase(user.login) } returns Result.Success(
+                listOf(FIRST_REPO, SECOND_REPO)
             )
             val expected = Fetched(listOf(FIRST_REPO_PRESENTATION, SECOND_REPO_PRESENTATION))
+
+            // WHEN
+            userDetailViewModel.fetchRepositoriesFromUser(user)
+
+            // THEN
+            Assert.assertEquals(expected, userDetailViewModel._fetchRepositoriesState.value)
+        }
+
+    @Test
+    fun `GIVEN getRepositoriesFromUserUseCase returns error WHEN fetchAllUsers called THEN must set fetchUsersState with error`() =
+        runTest(unconfinedTestDispatcher) {
+            // GIVEN
+            val user = FIRST_USER_PRESENTATION
+            val throwable = Throwable("Message")
+            coEvery { getRepositoriesFromUserUseCase(user.login) } returns Result.Error(throwable)
+            val expected = Error(throwable)
 
             // WHEN
             userDetailViewModel.fetchRepositoriesFromUser(user)
@@ -62,7 +78,7 @@ class UserDetailViewModelTest {
         runTest(unconfinedTestDispatcher) {
             // GIVEN
             val user = FIRST_USER_PRESENTATION
-            coEvery { getRepositoriesFromUserUseCase(user.login) } returns emptyList()
+            coEvery { getRepositoriesFromUserUseCase(user.login) } returns Result.Success(emptyList())
             val expected = EmptyList
 
             // WHEN
