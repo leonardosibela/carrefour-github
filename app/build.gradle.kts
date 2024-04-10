@@ -53,6 +53,11 @@ dependencies {
 
     implementation(libs.io.insert.koin.android)
 
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    implementation(libs.bumptech.glide)
+
 
     // TEST
     testImplementation(libs.junit)
