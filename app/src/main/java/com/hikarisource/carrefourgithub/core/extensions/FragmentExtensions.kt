@@ -2,6 +2,11 @@
 
 package com.hikarisource.carrefourgithub.core.extensions
 
+import android.R
+import android.annotation.SuppressLint
+import android.graphics.drawable.Drawable
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
@@ -55,4 +60,25 @@ fun Fragment.launchWhenCreated(block: suspend CoroutineScope.() -> Unit) {
 @Suppress("FunctionName")
 fun Fragment.VerticalItemDecoration(): RecyclerView.ItemDecoration {
     return DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+}
+
+@SuppressLint("Recycle")
+@Suppress("FunctionName")
+fun Fragment.VerticalLine(): ImageView {
+    val listDivider = intArrayOf(R.attr.listDivider)
+    val styledAttributes = requireContext().obtainStyledAttributes(listDivider)
+    val dividerDrawable = styledAttributes.getDrawable(0)
+    return ImageView(requireContext()).apply {
+        setImageDrawable(dividerDrawable)
+        layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+        )
+    }
+}
+
+fun Fragment.HorizontalLineDrawable(): Drawable {
+    val listDivider = intArrayOf(R.attr.listDivider)
+    val styledAttributes = requireContext().obtainStyledAttributes(listDivider)
+    return styledAttributes.getDrawable(0) ?: throw IllegalStateException()
 }

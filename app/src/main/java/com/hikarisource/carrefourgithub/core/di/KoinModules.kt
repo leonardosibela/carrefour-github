@@ -7,6 +7,7 @@ import com.hikarisource.carrefourgithub.data.repository.UserRepository
 import com.hikarisource.carrefourgithub.domain.usecase.GetAllUsersUseCase
 import com.hikarisource.carrefourgithub.domain.usecase.GetRepositoriesFromUserUseCase
 import com.hikarisource.carrefourgithub.domain.usecase.GetUserByNameUseCase
+import com.hikarisource.carrefourgithub.presentation.features.user.details.UserDetailViewModel
 import com.hikarisource.carrefourgithub.presentation.features.user.list.UserListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -41,6 +42,7 @@ private val useCaseModule = module {
 }
 
 private val viewModelModule = module {
+    viewModel { UserDetailViewModel(get()) }
     viewModel { UserListViewModel(get()) }
 }
 
