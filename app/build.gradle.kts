@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.jetbrainsKotlinPluginParcelize)
+    alias(libs.plugins.navigationSafeArgs)
 }
 
 android {

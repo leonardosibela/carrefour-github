@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.hikarisource.carrefourgithub.core.extensions.VerticalItemDecoration
 import com.hikarisource.carrefourgithub.core.extensions.launchWhenCreated
+import com.hikarisource.carrefourgithub.core.extensions.navigate
 import com.hikarisource.carrefourgithub.databinding.FragmentUserListBinding
 import com.hikarisource.carrefourgithub.presentation.model.UserPresentation
 import kotlinx.coroutines.flow.collectLatest
@@ -18,11 +18,9 @@ class UserListFragment : Fragment() {
     private val viewModel by viewModel<UserListViewModel>()
 
     private var _binding: FragmentUserListBinding? = null
-    val binding get() = _binding!!
+    private val binding get() = _binding!!
 
-    private val userAdapter: UserAdapter = UserAdapter {
-        Toast.makeText(requireContext(), it.login, Toast.LENGTH_SHORT).show()
-    }
+    private val userAdapter: UserAdapter = UserAdapter(::onUserClicked)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +40,10 @@ class UserListFragment : Fragment() {
         setupViews()
         observeViewModel()
         viewModel.fetchAllUsers()
+    }
+
+    private fun onUserClicked(user: UserPresentation) {
+        navigate(UserListFragmentDirections.toUserDetailFragment(user))
     }
 
     private fun setupViews() {

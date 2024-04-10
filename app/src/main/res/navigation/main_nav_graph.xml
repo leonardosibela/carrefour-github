@@ -9,6 +9,24 @@
         android:id="@+id/userListFragment"
         android:name="com.hikarisource.carrefourgithub.presentation.features.user.list.UserListFragment"
         android:label="fragment_user_list"
-        tools:layout="@layout/fragment_user_list" />
+        tools:layout="@layout/fragment_user_list">
+
+        <action
+            android:id="@+id/to_userDetailFragment"
+            app:destination="@id/userDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="com.hikarisource.carrefourgithub.presentation.features.user.details.UserDetailFragment"
+        android:label="fragment_user_detail"
+        tools:layout="@layout/fragment_user_detail">
+
+        <argument
+            android:name="user"
+            app:argType="com.hikarisource.carrefourgithub.presentation.model.UserPresentation" />
+
+    </fragment>
 
 </navigation>
