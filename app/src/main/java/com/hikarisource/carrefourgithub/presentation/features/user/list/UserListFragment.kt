@@ -6,10 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.hikarisource.carrefourgithub.core.extensions.VerticalItemDecoration
+import com.hikarisource.carrefourgithub.core.extensions.launchWhenCreated
 import com.hikarisource.carrefourgithub.databinding.FragmentUserListBinding
 import com.hikarisource.carrefourgithub.presentation.model.UserPresentation
+import kotlinx.coroutines.flow.collectLatest
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserListFragment : Fragment() {
+
+    private val viewModel by viewModel<UserListViewModel>()
 
     private var _binding: FragmentUserListBinding? = null
     val binding get() = _binding!!
@@ -33,11 +39,49 @@ class UserListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.userRecycler.apply {
+        setupViews()
+        observeViewModel()
+        viewModel.fetchAllUsers()
+    }
+
+    private fun setupViews() {
+        setupRecycler()
+    }
+
+    private fun setupRecycler() = binding.run {
+        userRecycler.apply {
             adapter = userAdapter
+            addItemDecoration(VerticalItemDecoration())
             setHasFixedSize(true)
-            userAdapter.submitList(listOf(FIRST_USER, SECOND_USER))
         }
+    }
+
+    private fun observeViewModel() {
+        observerFetchUsersState()
+    }
+
+    private fun observerFetchUsersState() = launchWhenCreated {
+        viewModel.fetchUsersState.collectLatest(::onFetchUserStateChanged)
+    }
+
+    private fun onFetchUserStateChanged(fetchUserState: FetchUserState) {
+        when (fetchUserState) {
+            Fetching -> displayUserListLoading()
+            EmptyList -> displayEmptyListMessage()
+            is Fetched -> displayUsers(fetchUserState.users)
+        }
+    }
+
+    private fun displayUserListLoading() {
+
+    }
+
+    private fun displayEmptyListMessage() {
+
+    }
+
+    private fun displayUsers(users: List<UserPresentation>) {
+        userAdapter.submitList(users)
     }
 }
 
