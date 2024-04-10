@@ -35,6 +35,7 @@ class UserRepositoryApiTest {
     @Test
     fun `GIVEN userRepositoryApi WHEN getAll called THEN must return same value as GithubApi fetchUsers mapped`() =
         runTest {
+            // GIVEN
             coEvery { githubApi.fetchUsers() } returns listOf(
                 FIRST_USER_RESPONSE,
                 SECOND_USER_RESPONSE
@@ -42,8 +43,10 @@ class UserRepositoryApiTest {
 
             val expected = listOf(FIRST_USER, SECOND_USER)
 
+            // WHEN
             val actual = userRepositoryApi.getAll()
 
+            // THEN
             coVerify(exactly = 1) { githubApi.fetchUsers() }
             Assert.assertEquals(expected, actual)
         }
@@ -67,6 +70,7 @@ class UserRepositoryApiTest {
     @Test
     fun `GIVEN userRepositoryApi WHEN getUserRepos called THEN must return same value as GithubApi getUserRepos mapped`() =
         runTest {
+            // GIVEN
             val username = "leonardosibela"
             coEvery {
                 githubApi.getUserRepos(username)
@@ -77,8 +81,10 @@ class UserRepositoryApiTest {
 
             val expected = listOf(FIRST_REPO, SECOND_REPO)
 
+            // WHEN
             val actual = userRepositoryApi.getUserRepos(username)
 
+            // THEN
             coVerify(exactly = 1) { githubApi.getUserRepos(username) }
             Assert.assertEquals(expected, actual)
         }

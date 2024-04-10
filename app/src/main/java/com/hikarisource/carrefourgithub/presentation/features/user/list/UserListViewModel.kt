@@ -1,5 +1,6 @@
 package com.hikarisource.carrefourgithub.presentation.features.user.list
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hikarisource.carrefourgithub.domain.usecase.GetAllUsersUseCase
@@ -13,7 +14,9 @@ class UserListViewModel(
     private val getAllUsersUseCase: GetAllUsersUseCase
 ) : ViewModel() {
 
-    private val _fetchUsersState = MutableStateFlow<FetchUserState>(Fetching)
+    @Suppress("PropertyName")
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val _fetchUsersState = MutableStateFlow<FetchUserState>(Fetching)
     val fetchUsersState = _fetchUsersState.asStateFlow()
 
     fun fetchAllUsers() = viewModelScope.launch {

@@ -4,6 +4,7 @@ import com.hikarisource.carrefourgithub.data.remote.reponse.RepositoryResponse
 import com.hikarisource.carrefourgithub.data.remote.reponse.UserResponse
 import com.hikarisource.carrefourgithub.domain.model.Repository
 import com.hikarisource.carrefourgithub.domain.model.User
+import com.hikarisource.carrefourgithub.presentation.model.UserPresentation
 
 
 object TestData {
@@ -29,6 +30,20 @@ object TestData {
     )
 
     val SECOND_USER_RESPONSE = UserResponse(
+        id = 2,
+        login = "defunkt",
+        avatarUrl = "https://avatars.githubusercontent.com/u/2?v=4",
+        url = "https://api.github.com/users/defunkt"
+    )
+
+    val FIRST_USER_PRESENTATION = UserPresentation(
+        id = 1,
+        login = "mojombo",
+        avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4",
+        url = "https://api.github.com/users/mojombo"
+    )
+
+    val SECOND_USER_PRESENTATION = UserPresentation(
         id = 2,
         login = "defunkt",
         avatarUrl = "https://avatars.githubusercontent.com/u/2?v=4",
