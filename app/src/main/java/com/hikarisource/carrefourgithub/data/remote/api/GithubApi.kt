@@ -12,7 +12,7 @@ interface GithubApi {
     }
 
     @GET("users")
-    suspend fun searchUsers(): List<UserResponse>
+    suspend fun fetchUsers(): List<UserResponse>
 
     @GET("/users/{username}")
     suspend fun getUser(

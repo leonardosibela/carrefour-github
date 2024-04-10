@@ -2,6 +2,7 @@ package com.hikarisource.carrefourgithub.core.di
 
 import com.hikarisource.carrefourgithub.data.fake.UserRepositoryFake
 import com.hikarisource.carrefourgithub.data.remote.api.GithubApi
+import com.hikarisource.carrefourgithub.data.remote.repository.UserRepositoryApi
 import com.hikarisource.carrefourgithub.data.repository.UserRepository
 import com.hikarisource.carrefourgithub.domain.usecase.GetAllUsersUseCase
 import com.hikarisource.carrefourgithub.domain.usecase.GetRepositoriesFromUserUseCase
@@ -30,11 +31,10 @@ private val repositoriesFakeModule = module {
 
 @Suppress("UnusedPrivateProperty")
 private val repositoryApiModule = module {
-//    single<UserRepository> { AutismSignRepositoryRoom(get()) }
+    single<UserRepository> { UserRepositoryApi(get()) }
 }
 
 private val useCaseModule = module {
-    // Main Menu
     single { GetAllUsersUseCase(get()) }
     single { GetRepositoriesFromUserUseCase(get()) }
     single { GetUserByNameUseCase(get()) }
@@ -47,6 +47,6 @@ private val viewModelModule = module {
 object AppModules {
 
     val modules = module { }.apply {
-        includes(apiModule, repositoriesFakeModule, useCaseModule, viewModelModule)
+        includes(apiModule, repositoryApiModule, useCaseModule, viewModelModule)
     }
 }
