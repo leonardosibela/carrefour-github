@@ -52,8 +52,13 @@ class UserListFragment : Fragment() {
         setupRecycler()
     }
 
-    private fun setupListeners() = binding.run{
-        fetchUsersTryAgainButton.setOnClickListener {  }
+    private fun setupListeners() = binding.run {
+        fetchUsersTryAgainButton.setOnClickListener { onTryAgainClicked() }
+    }
+
+    private fun onTryAgainClicked() {
+        displayUserListLoading()
+        viewModel.fetchAllUsers()
     }
 
     private fun setupRecycler() = binding.run {
