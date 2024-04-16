@@ -105,5 +105,6 @@ class UserListFragment : Fragment() {
         userListErrorText.isVisible = true
         usersProgress.isVisible = false
         userRecycler.isVisible = false
+        val a = 5
     }
 }
